@@ -1,0 +1,5 @@
+backend/logs/*
+!backend/logs/.gitkeep
+backend/config/config.php
+backend/vendor/
+.DS_Store
