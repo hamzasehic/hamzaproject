@@ -1,5 +1,5 @@
 <?php
-return = [
+return [
     'database' => [
         'host' => '' ,
         'name'=>'',
