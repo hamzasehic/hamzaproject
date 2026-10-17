@@ -1,0 +1,7 @@
+{
+    "name": "hamza/gymhub",
+    "description": "GymHub - web aplikacija za upravljanje teretanom",
+    "require": {
+        "php": ">=8.0"
+    }
+}
