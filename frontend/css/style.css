@@ -10,11 +10,12 @@ body {
 .sidebar {
     width: 250px;
     min-height: 100vh;
-    background-color: var(--navy);
+    background-color: var(--navy) ;
     color: var(--white);
     padding: 20px 10px;
     display: flex;
     flex-direction: column;
+    overflow-y: auto;
 }
 .sidebar-brand{
     font-size: 1.5rem;
@@ -90,4 +91,100 @@ body.auth-mode main#spapp {
 .auth-card {
     width: 100%;
     max-width: 400px;
+}
+.stat-card {
+    border: none;
+    border-left: 4px solid var(--accent);
+}
+.stat-label {
+    font-size: 0.85rem;
+    color: #6c757d;
+}
+.stat-value {
+    font-size: 1.8rem;
+    font-weight: 700;
+    color: var(--navy);
+}
+.plan-card {
+    border: 1px solid #dbe5ef;
+}
+
+.plan-featured {
+    border: 2px solid var(--accent);
+}
+
+.plan-price {
+    font-size: 2rem;
+    font-weight: 700;
+    color: var(--navy);
+    margin: 10px 0 15px 0;
+}
+
+.plan-price span {
+    font-size: 0.9rem;
+    font-weight: 400;
+    color: #6c757d;
+}
+
+.plan-features li {
+    padding: 4px 0;
+}
+
+.plan-features .bi-check-circle-fill {
+    color: var(--accent);
+    margin-right: 6px;
+}
+
+.plan-features .bi-x-circle {
+    color: #adb5bd;
+    margin-right: 6px;
+}
+
+.btn-outline-accent {
+    border: 1px solid var(--accent);
+    color: var(--navy);
+    font-weight: 600;
+}
+
+.btn-outline-accent:hover {
+    background-color: var(--accent);
+    color: var(--navy);
+}
+
+.badge-accent {
+    background-color: var(--accent);
+    color: var(--navy);
+}
+
+.trainer-card {
+    border: 1px solid #dbe5ef;
+}
+
+.trainer-avatar {
+    width: 80px;
+    height: 80px;
+    border-radius: 50%;
+    background-color: var(--navy);
+    color: var(--accent);
+    font-size: 1.6rem;
+    font-weight: 700;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.trainer-role {
+    color: var(--accent);
+    font-weight: 600;
+}
+.hero {
+    color: var(--white);
+    padding: 40px 30px;
+    border-radius: 10px;
+    background-color: var(--navy);
+    background-image:
+        linear-gradient(rgba(11, 31, 58, 0.7), rgba(11, 31, 58, 0.7)),
+        url("../assets/img/gym-bg.jpg");
+    background-size: cover;
+    background-position: center;
 }

@@ -13,7 +13,10 @@
 <body>
     <div class="d-flex">
 
-        <nav class="sidebar" id="main-nav">
+        <nav class="sidebar offcanvas offcanvas-start" id="main-nav" tabindex="-1" aria-label="Main menu">
+            <div class="text-end">
+                <button type="button" class="btn-close btn-close-white" data-bs-dismiss="offcanvas" data-bs-target="#main-nav" aria-label="Close"></button>
+            </div>
             <div class="sidebar-brand">
                 <i class="fa-solid fa-dumbbell"></i> GymHub
             </div>
@@ -57,7 +60,10 @@
         </nav>
 
         <div class="content">
-            <header class="topbar">
+            <header class="topbar d-flex align-items-center">
+                <button class="btn border-0 text-white me-2" type="button" data-bs-toggle="offcanvas" data-bs-target="#main-nav" aria-controls="main-nav" aria-label="Open menu">
+                    <i class="bi bi-list fs-3"></i>
+                </button>
                 <h5 id="page-title">Dashboard</h5>
             </header>
 

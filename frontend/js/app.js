@@ -22,6 +22,10 @@ $(document).ready(function () {
         const title = $('#main-nav .nav-link[href="#' + view + '"]').text().trim();
         $("#page-title").text(title || "GymHub");
 
+        const offcanvas = bootstrap.Offcanvas.getInstance(document.getElementById("main-nav"));
+        if (offcanvas) {
+            offcanvas.hide();
+        }
         window.scrollTo(0, 0);
     }
 
