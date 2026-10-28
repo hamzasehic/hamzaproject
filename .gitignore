@@ -3,3 +3,5 @@ backend/logs/*
 backend/config/config.php
 backend/vendor/
 .DS_Store
+desktop.ini
+Thumbs.db
