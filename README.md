@@ -33,3 +33,21 @@ classes, bookings): see [docs/ERD.md](docs/ERD.md).
 - docs: ERD, AI log
 
 ## Running the frontend locally
+
+## Database setup
+1. Start MySQL (e.g. via XAMPP).
+2. Import `database/gymhub.sql` (phpMyAdmin -> SQL tab, paste and run). It creates
+   the `gymhub` database, all tables and sample data.
+3. Copy `backend/config/config.example.php` to `backend/config/config.php` and
+   adjust the values if needed (XAMPP defaults: host 127.0.0.1, user root, empty password).
+4. Run the DAO test: `php backend/tests/dao_test.php`
+
+## Test accounts
+| Role | Email | Password |
+|---|---|---|
+| Admin | admin@gymhub.com | Admin123! |
+| Member | emma@example.com | Member123! |
+
+## DAO layer
+`BaseDao` provides generic CRUD (prepared statements, PDO). Each entity has its own DAO
+extending it: UserDao, MembershipDao, TrainerDao, UserMembershipDao, ClassDao, BookingDao.

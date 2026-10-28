@@ -37,3 +37,19 @@ I noticed the problem because the CSS styling was not being applied to the eleme
 
 AI suggested adding a click event to an element that was not the correct button. When I tested the page, clicking the button did not produce the expected result. I checked the HTML and changed the event listener to the correct button.
 
+
+## Milestone 2
+
+### Tools used
+- Claude (chat): schema design, SQL script,explanations.
+
+### AI mistakes
+1. **Wrong advice about Apache.** The AI said Apache was not needed for now, but
+   phpMyAdmin runs on Apache, so the page did not open until Apache was started.
+2. **Config format.** The AI first proposed config.php as a returned array, then
+   switched to a Config class after comparing with the professor's example
+   repository (it also allows environment variables for deployment).
+
+### What I did myself
+- (e.g. chose column types and ON DELETE rules, ran the SQL in phpMyAdmin,
+  tested DAOs, fixed errors, wrote the test accounts.)
