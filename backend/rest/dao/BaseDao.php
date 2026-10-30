@@ -1,0 +1,61 @@
+<?php
+require_once __DIR__ . '/../../config/Database.php';
+
+class BaseDao
+{
+    protected $connection;
+    protected $table;
+
+    public function __construct($table)
+    {
+        $this->table = $table;
+        $this->connection = Database::connect();
+    }
+
+    public function getAll()
+    {
+        $stmt = $this->connection->prepare('SELECT * FROM ' . $this->table);
+        $stmt->execute();
+        return $stmt->fetchAll();
+    }
+
+    public function getById($id)
+    {
+        $stmt = $this->connection->prepare('SELECT * FROM ' . $this->table . ' WHERE id = :id');
+        $stmt->execute(['id' => $id]);
+        return $stmt->fetch();
+    }
+
+    public function insert($data)
+    {
+        $columns = implode(', ', array_keys($data));
+        $placeholders = ':' . implode(', :', array_keys($data));
+        $stmt = $this->connection->prepare(
+            'INSERT INTO ' . $this->table . ' (' . $columns . ') VALUES (' . $placeholders . ')'
+        );
+        $stmt->execute($data);
+        return $this->connection->lastInsertId();
+    }
+
+    public function update($id, $data)
+    {
+        $fields = '';
+        foreach ($data as $key => $value) {
+            $fields .= $key . ' = :' . $key . ', ';
+        }
+        $fields = rtrim($fields, ', ');
+        $data['id'] = $id;
+        $stmt = $this->connection->prepare(
+            'UPDATE ' . $this->table . ' SET ' . $fields . ' WHERE id = :id'
+        );
+        $stmt->execute($data);
+        return $stmt->rowCount();
+    }
+
+    public function delete($id)
+    {
+        $stmt = $this->connection->prepare('DELETE FROM ' . $this->table . ' WHERE id = :id');
+        $stmt->execute(['id' => $id]);
+        return $stmt->rowCount();
+    }
+}

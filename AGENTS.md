@@ -34,3 +34,10 @@ logic, DAOs are the only layer that talks to the database.
 - Never put secrets (passwords, API keys) in code; use backend/config/config.php (not committed).
 - Explain every change; keep code simple enough for the student to explain.
 - Do not call the external API from the frontend; go through the backend.
+
+## Database and DAO rules
+- All SQL lives in DAO classes (backend/rest/dao), nowhere else.
+- Always use prepared statements; never concatenate user input into SQL.
+- Column names in insert/update come from code, never from raw user input.
+- Passwords are stored only as bcrypt hashes (password_hash / password_verify).
+- Database credentials come from Config (config.php, not committed).
