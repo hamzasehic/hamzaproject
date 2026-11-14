@@ -34,4 +34,13 @@ class UserMembershipDao extends BaseDao
         $stmt->execute(['user_id' => $userId]);
         return $stmt->fetch();
     }
+
+    public function countByMembership($membershipId)
+    {
+        $stmt = $this->connection->prepare(
+            'SELECT COUNT(*) AS total FROM user_memberships WHERE membership_id = :membership_id'
+        );
+        $stmt->execute(['membership_id' => $membershipId]);
+        return (int) $stmt->fetch()['total'];
+    }
 }

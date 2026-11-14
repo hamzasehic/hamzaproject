@@ -92,17 +92,17 @@ INSERT INTO trainers (full_name, specialty, bio, experience_years) VALUES
 ('Damir Mujic', 'Boxing & Conditioning', 'Technique, speed and full-body conditioning.', 5);
 
 INSERT INTO user_memberships (user_id, membership_id, start_date, end_date, status) VALUES
-(2, 2, '2026-10-01', '2026-12-30', 'active'),
-(3, 1, '2026-10-15', '2026-11-14', 'active'),
-(4, 3, '2026-09-01', '2027-08-31', 'active');
+(2, 2, DATE_SUB(CURDATE(), INTERVAL 40 DAY), DATE_ADD(CURDATE(), INTERVAL 50 DAY), 'active'),
+(3, 1, DATE_SUB(CURDATE(), INTERVAL 10 DAY), DATE_ADD(CURDATE(), INTERVAL 20 DAY), 'active'),
+(4, 3, DATE_SUB(CURDATE(), INTERVAL 60 DAY), DATE_ADD(CURDATE(), INTERVAL 305 DAY), 'active');
 
 INSERT INTO classes (trainer_id, name, start_time, capacity, description) VALUES
-(1, 'Morning Yoga', '2026-11-02 08:00:00', 15, 'Gentle start of the week'),
-(2, 'HIIT', '2026-11-02 18:00:00', 12, 'High-intensity interval training'),
-(3, 'Strength Basics', '2026-11-03 10:00:00', 10, 'Intro to compound lifts'),
-(4, 'Boxing', '2026-11-04 19:00:00', 8, 'Technique and conditioning'),
-(3, 'Strength Basics', '2026-10-23 10:00:00', 10, 'Past class'),
-(4, 'Boxing', '2026-10-21 19:00:00', 8, 'Past class');
+(1, 'Morning Yoga', TIMESTAMP(DATE_ADD(CURDATE(), INTERVAL 1 DAY), '08:00:00'), 15, 'Gentle start of the week'),
+(2, 'HIIT', TIMESTAMP(DATE_ADD(CURDATE(), INTERVAL 1 DAY), '18:00:00'), 12, 'High-intensity interval training'),
+(3, 'Strength Basics', TIMESTAMP(DATE_ADD(CURDATE(), INTERVAL 2 DAY), '10:00:00'), 10, 'Intro to compound lifts'),
+(4, 'Boxing', TIMESTAMP(DATE_ADD(CURDATE(), INTERVAL 3 DAY), '19:00:00'), 8, 'Technique and conditioning'),
+(3, 'Strength Basics', TIMESTAMP(DATE_SUB(CURDATE(), INTERVAL 5 DAY), '10:00:00'), 10, 'Past class'),
+(4, 'Boxing', TIMESTAMP(DATE_SUB(CURDATE(), INTERVAL 7 DAY), '19:00:00'), 8, 'Past class');
 
 INSERT INTO bookings (user_id, class_id, status) VALUES
 (2, 1, 'booked'),

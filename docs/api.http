@@ -1,0 +1,85 @@
+@base = http://localhost:8001
+
+### List trainers
+GET {{base}}/trainers
+
+### One trainer
+GET {{base}}/trainers/1
+
+### Missing trainer (404)
+GET {{base}}/trainers/9999
+
+### Create (201)
+POST {{base}}/trainers
+Content-Type: application/json
+
+{ "full_name": "New Trainer", "specialty": "Pilates", "experience_years": 3 }
+
+### Create with missing name (400)
+POST {{base}}/trainers
+Content-Type: application/json
+
+{ "specialty": "Pilates" }
+
+### Update (put the id from the create response instead of 5)
+PUT {{base}}/trainers/7
+Content-Type: application/json
+
+{ "full_name": "Updated Trainer", "specialty": "Yoga", "experience_years": 4 }
+
+### Delete trainer that has classes (400)
+DELETE {{base}}/trainers/1
+
+### Delete (put the id from the create response instead of 5)
+DELETE {{base}}/trainers/7
+
+### Memberships
+GET {{base}}/memberships
+
+### Delete bought plan (400)
+DELETE {{base}}/memberships/2
+
+### Classes (with trainer name)
+GET {{base}}/classes
+
+### Upcoming classes
+GET {{base}}/classes/upcoming
+
+### Create class in the past (400)
+POST {{base}}/classes
+Content-Type: application/json
+
+{ "trainer_id": 1, "name": "Old class", "start_time": "2020-01-01 10:00:00", "capacity": 10 }
+
+### Create class with missing trainer (400)
+POST {{base}}/classes
+Content-Type: application/json
+
+{ "trainer_id": 999, "name": "Ghost class", "start_time": "2030-01-01 10:00:00", "capacity": 10 }
+
+### Delete class with bookings (400)
+DELETE {{base}}/classes/1
+
+### Users (no password_hash in the response)
+GET {{base}}/users
+
+### Create user (201)
+POST {{base}}/users
+Content-Type: application/json
+
+{ "full_name": "New Member", "email": "new@example.com", "password": "Password123" }
+
+### Duplicate email (400)
+POST {{base}}/users
+Content-Type: application/json
+
+{ "full_name": "Copy", "email": "emma@example.com", "password": "Password123" }
+
+### Short password (400)
+POST {{base}}/users
+Content-Type: application/json
+
+{ "full_name": "Short", "email": "short@example.com", "password": "123" }
+
+### Delete the last admin (400)
+DELETE {{base}}/users/1
