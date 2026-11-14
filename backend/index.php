@@ -13,11 +13,15 @@ require_once __DIR__ . '/rest/services/TrainerService.php';
 require_once __DIR__ . '/rest/services/MembershipService.php';
 require_once __DIR__ . '/rest/services/ClassService.php';
 require_once __DIR__ . '/rest/services/UserService.php';
+require_once __DIR__ . '/rest/services/BookingService.php';
+require_once __DIR__ . '/rest/services/UserMembershipService.php';
 
 Flight::register('trainer_service', 'TrainerService');
 Flight::register('membership_service', 'MembershipService');
 Flight::register('class_service', 'ClassService');
 Flight::register('user_service', 'UserService');
+Flight::register('booking_service', 'BookingService');
+Flight::register('user_membership_service', 'UserMembershipService');
 
 Flight::map('error', function (Throwable $e) {
     if ($e instanceof HttpException) {
@@ -53,5 +57,7 @@ require_once __DIR__ . '/rest/routes/TrainerRoutes.php';
 require_once __DIR__ . '/rest/routes/MembershipRoutes.php';
 require_once __DIR__ . '/rest/routes/ClassRoutes.php';
 require_once __DIR__ . '/rest/routes/UserRoutes.php';
+require_once __DIR__ . '/rest/routes/BookingRoutes.php';
+require_once __DIR__ . '/rest/routes/UserMembershipRoutes.php';
 
 Flight::start();

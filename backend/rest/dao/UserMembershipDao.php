@@ -43,4 +43,17 @@ class UserMembershipDao extends BaseDao
         $stmt->execute(['membership_id' => $membershipId]);
         return (int) $stmt->fetch()['total'];
     }
+    
+    public function getAllDetailed()
+    {
+        $stmt = $this->connection->prepare(
+            'SELECT um.*, u.full_name AS user_name, m.name AS membership_name, m.price
+             FROM user_memberships um
+             JOIN users u ON u.id = um.user_id
+             JOIN memberships m ON m.id = um.membership_id
+             ORDER BY um.start_date DESC'
+        );
+        $stmt->execute();
+        return $stmt->fetchAll();
+    }
 }
