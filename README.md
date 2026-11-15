@@ -51,3 +51,42 @@ classes, bookings): see [docs/ERD.md](docs/ERD.md).
 ## DAO layer
 `BaseDao` provides generic CRUD (prepared statements, PDO). Each entity has its own DAO
 extending it: UserDao, MembershipDao, TrainerDao, UserMembershipDao, ClassDao, BookingDao.
+
+## Running the backend
+1. `cd backend` and run `composer install`.
+2. Copy `backend/config/config.example.php` to `backend/config/config.php` and set the values
+   (the database settings work with XAMPP defaults; put your API Ninjas key into `EXTERNAL_API_KEY`).
+3. Import `database/gymhub.sql` (see "Database setup" above).
+4. Start the API: `php -S localhost:8001 index.php` (run inside the `backend` folder).
+5. Swagger documentation: http://localhost:8001/public/v1/docs/index.html
+
+## API overview
+Responses are JSON. Errors have the form `{"error": "..."}`.
+
+| Resource | Endpoints |
+|---|---|
+| Trainers | `GET/POST /trainers`, `GET/PUT/DELETE /trainers/{id}` |
+| Membership plans | `GET/POST /memberships`, `GET/PUT/DELETE /memberships/{id}` |
+| Classes | `GET/POST /classes`, `GET /classes/upcoming`, `GET/PUT/DELETE /classes/{id}` |
+| Users | `GET/POST /users`, `GET/PUT/DELETE /users/{id}` |
+| Bookings | `GET/POST /bookings`, `GET/PUT/DELETE /bookings/{id}`, `POST /bookings/{id}/cancel`, `GET /users/{id}/bookings` |
+| User memberships | `GET/POST /user-memberships`, `GET/PUT/DELETE /user-memberships/{id}`, `GET /users/{id}/memberships`, `GET /users/{id}/membership` |
+| Exercises (external API) | `GET /exercises/options`, `GET /exercises?muscle=biceps&difficulty=beginner` |
+
+Status codes: 200 OK, 201 Created, 400 invalid data or a broken business rule, 404 not found,
+500 unexpected error (generic message), 503 external service unavailable.
+
+## Business rules (services)
+- Trainers with classes, plans that were bought, classes with active bookings and the last admin cannot be deleted.
+- A new class must start in the future; its capacity cannot drop below the number of bookings.
+- A booking needs an active membership and a class that has not started and is not full; the same class cannot be booked twice.
+- A user can have only one active membership; its end date is calculated from the plan.
+- Passwords are stored as bcrypt hashes and are never returned by the API.
+
+## External API
+The Exercises page will use the API Ninjas Exercises API. The backend calls it (`ExerciseService`)
+with a timeout, validates the input first, hides the API key and, if the service fails, logs the error
+to `backend/logs/error.log` and answers with 503 and a friendly message while the rest of the app keeps working.
+
+## Architecture
+routes -> services -> DAOs -> MySQL. Only services call DAOs; routes only handle HTTP.

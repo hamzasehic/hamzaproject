@@ -53,3 +53,25 @@ AI suggested adding a click event to an element that was not the correct button.
 ### What I did myself
 - (e.g. chose column types and ON DELETE rules, ran the SQL in phpMyAdmin,
   tested DAOs, fixed errors, wrote the test accounts.)
+
+
+## Milestone 3
+
+### Tools used
+- Claude (chat): service layer, external API service, OpenAPI documentation.
+
+### AI mistakes
+1. **Sample data with fixed dates.** The AI wrote the sample classes with fixed dates (early November).
+   A few days later they were in the past, so `getUpcoming` returned an empty list and the
+   "class must be in the future" rules could not be tested. I noticed it in the DAO test output.
+   The data was rewritten with dates relative to the current date (CURDATE()).
+2. **Missing requirement in the Composer instructions.** The AI told me to run `composer require`
+   but did not mention that PHP needs the zip extension. The command failed ("zip extension and
+   unzip/7z are both missing"); I enabled `extension=zip` in php.ini and it worked.
+
+### What I did myself
+- Registered at API Ninjas, got the key and tested the external API, including a wrong key and no network.
+- Tested every route with docs/api.http and fixed my own mistakes (a route file that was not
+  created, routes required after Flight::start(), starting the server from the wrong folder).
+- Checked the business rules by trying to break them (full class, duplicate booking, deleting a bought plan).
+
