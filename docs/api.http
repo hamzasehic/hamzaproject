@@ -179,3 +179,18 @@ Content-Type: application/json
 
 ### Now delete it (200)
 DELETE {{base}}/user-memberships/4
+
+### Exercise options (no external call)
+GET {{base}}/exercises/options
+
+### Search (200)
+GET {{base}}/exercises?muscle=biceps&difficulty=beginner
+
+### Search without difficulty (200)
+GET {{base}}/exercises?muscle=chest
+
+### Missing muscle (400)
+GET {{base}}/exercises
+
+### Invalid muscle (400)
+GET {{base}}/exercises?muscle=pizza
