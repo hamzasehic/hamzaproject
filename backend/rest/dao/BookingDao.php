@@ -30,4 +30,26 @@ class BookingDao extends BaseDao
         $stmt->execute(['class_id' => $classId]);
         return (int) $stmt->fetch()['total'];
     }
+
+        public function getByUserAndClass($userId, $classId)
+    {
+        $stmt = $this->connection->prepare(
+            'SELECT * FROM bookings WHERE user_id = :user_id AND class_id = :class_id'
+        );
+        $stmt->execute(['user_id' => $userId, 'class_id' => $classId]);
+        return $stmt->fetch();
+    }
+
+    public function getAllDetailed()
+    {
+        $stmt = $this->connection->prepare(
+            'SELECT b.*, u.full_name AS user_name, c.name AS class_name, c.start_time
+             FROM bookings b
+             JOIN users u ON u.id = b.user_id
+             JOIN classes c ON c.id = b.class_id
+             ORDER BY c.start_time DESC'
+        );
+        $stmt->execute();
+        return $stmt->fetchAll();
+    }
 }

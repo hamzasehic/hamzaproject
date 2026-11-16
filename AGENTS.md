@@ -41,3 +41,13 @@ logic, DAOs are the only layer that talks to the database.
 - Column names in insert/update come from code, never from raw user input.
 - Passwords are stored only as bcrypt hashes (password_hash / password_verify).
 - Database credentials come from Config (config.php, not committed).
+
+## Services, routes and API rules
+- Routes (backend/rest/routes) only read the request, call a service and return JSON. No business logic.
+- Services (backend/rest/services) hold validation and business rules and are the only layer that calls DAOs.
+- Services signal problems with exceptions that carry an HTTP status (utils/exceptions.php);
+  one error handler in index.php turns them into JSON. Unexpected errors return 500 with a generic message.
+- Services keep only whitelisted fields (allowed_fields) before they reach a DAO.
+- The password hash is never returned. The external API key stays on the backend (config.php, not committed).
+- Every new endpoint must be added to docs/api.http and documented in backend/public/v1/docs/paths.
+- Never log secrets.

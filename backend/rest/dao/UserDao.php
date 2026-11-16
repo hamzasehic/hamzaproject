@@ -14,4 +14,10 @@ class UserDao extends BaseDao
         $stmt->execute(['email' => $email]);
         return $stmt->fetch();
     }
+    public function countByRole($role)
+    {
+        $stmt = $this->connection->prepare('SELECT COUNT(*) AS total FROM users WHERE role = :role');
+        $stmt->execute(['role' => $role]);
+        return (int) $stmt->fetch()['total'];
+    }
 }

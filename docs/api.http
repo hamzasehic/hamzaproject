@@ -1,0 +1,196 @@
+@base = http://localhost:8001
+
+### List trainers
+GET {{base}}/trainers
+
+### One trainer
+GET {{base}}/trainers/1
+
+### Missing trainer (404)
+GET {{base}}/trainers/9999
+
+### Create (201)
+POST {{base}}/trainers
+Content-Type: application/json
+
+{ "full_name": "New Trainer", "specialty": "Pilates", "experience_years": 3 }
+
+### Create with missing name (400)
+POST {{base}}/trainers
+Content-Type: application/json
+
+{ "specialty": "Pilates" }
+
+### Update (put the id from the create response instead of 5)
+PUT {{base}}/trainers/7
+Content-Type: application/json
+
+{ "full_name": "Updated Trainer", "specialty": "Yoga", "experience_years": 4 }
+
+### Delete trainer that has classes (400)
+DELETE {{base}}/trainers/1
+
+### Delete (put the id from the create response instead of 5)
+DELETE {{base}}/trainers/7
+
+### Memberships
+GET {{base}}/memberships
+
+### Delete bought plan (400)
+DELETE {{base}}/memberships/2
+
+### Classes (with trainer name)
+GET {{base}}/classes
+
+### Upcoming classes
+GET {{base}}/classes/upcoming
+
+### Create class in the past (400)
+POST {{base}}/classes
+Content-Type: application/json
+
+{ "trainer_id": 1, "name": "Old class", "start_time": "2020-01-01 10:00:00", "capacity": 10 }
+
+### Create class with missing trainer (400)
+POST {{base}}/classes
+Content-Type: application/json
+
+{ "trainer_id": 999, "name": "Ghost class", "start_time": "2030-01-01 10:00:00", "capacity": 10 }
+
+### Delete class with bookings (400)
+DELETE {{base}}/classes/1
+
+### Users (no password_hash in the response)
+GET {{base}}/users
+
+### Create user (201)
+POST {{base}}/users
+Content-Type: application/json
+
+{ "full_name": "New Member", "email": "new@example.com", "password": "Password123" }
+
+### Duplicate email (400)
+POST {{base}}/users
+Content-Type: application/json
+
+{ "full_name": "Copy", "email": "emma@example.com", "password": "Password123" }
+
+### Short password (400)
+POST {{base}}/users
+Content-Type: application/json
+
+{ "full_name": "Short", "email": "short@example.com", "password": "123" }
+
+### Delete the last admin (400)
+DELETE {{base}}/users/1
+
+### Bookings (with user and class names)
+GET {{base}}/bookings
+
+### Book a class (201): Liam books Boxing
+POST {{base}}/bookings
+Content-Type: application/json
+
+{ "user_id": 3, "class_id": 4 }
+
+### Same booking again (400: already booked)
+POST {{base}}/bookings
+Content-Type: application/json
+
+{ "user_id": 3, "class_id": 4 }
+
+### Admin has no membership (400)
+POST {{base}}/bookings
+Content-Type: application/json
+
+{ "user_id": 1, "class_id": 1 }
+
+### Past class (400)
+POST {{base}}/bookings
+Content-Type: application/json
+
+{ "user_id": 3, "class_id": 5 }
+
+### Cancel a booking (200), put the id from the booking above
+POST {{base}}/bookings/8/cancel
+
+### Cancel again (400)
+POST {{base}}/bookings/8/cancel
+
+### Book again after cancelling (201)
+POST {{base}}/bookings
+Content-Type: application/json
+
+{ "user_id": 3, "class_id": 4 }
+
+### Bookings of one user
+GET {{base}}/users/2/bookings
+
+### Bookings of a missing user (404)
+GET {{base}}/users/999/bookings
+
+### Full class test, step 1: class with capacity 1 (201)
+POST {{base}}/classes
+Content-Type: application/json
+
+{ "trainer_id": 1, "name": "Tiny class", "start_time": "2030-01-01 10:00:00", "capacity": 1 }
+
+### Step 2: first booking (201), use the class id from step 1
+POST {{base}}/bookings
+Content-Type: application/json
+
+{ "user_id": 2, "class_id": CLASS_ID }
+
+### Step 3: second person (400: class is full)
+POST {{base}}/bookings
+Content-Type: application/json
+
+{ "user_id": 3, "class_id": CLASS_ID }
+
+### User memberships
+GET {{base}}/user-memberships
+
+### Active membership of user 2 (200)
+GET {{base}}/users/2/membership
+
+### Admin has no membership (404)
+GET {{base}}/users/1/membership
+
+### Buy a membership for the admin (201)
+POST {{base}}/user-memberships
+Content-Type: application/json
+
+{ "user_id": 1, "membership_id": 2 }
+
+### Buy a second one (400: already has an active membership)
+POST {{base}}/user-memberships
+Content-Type: application/json
+
+{ "user_id": 1, "membership_id": 1 }
+
+### Delete an active membership (400), put the id from the purchase above
+DELETE {{base}}/user-memberships/4
+
+### Cancel it (200)
+PUT {{base}}/user-memberships/4
+Content-Type: application/json
+
+{ "status": "cancelled" }
+
+### Now delete it (200)
+DELETE {{base}}/user-memberships/4
+
+### Exercise options (no external call)
+GET {{base}}/exercises/options
+
+### Search (200)
+GET {{base}}/exercises?muscle=biceps&difficulty=beginner
+
+### Search without difficulty (200)
+GET {{base}}/exercises?muscle=chest
+
+### Missing muscle (400)
+GET {{base}}/exercises
+
+### Invalid muscle (400)
+GET {{base}}/exercises?muscle=pizza
